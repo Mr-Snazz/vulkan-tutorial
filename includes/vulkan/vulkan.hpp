@@ -33,11 +33,11 @@ namespace SNZ
     inline VkPipeline GraphicsPipeline;
 
     inline VkCommandPool CommandPool;
-    inline VkCommandBuffer Commandbuffer;
 
-    inline VkSemaphore ImageAvailableSemaphore;
-    inline VkSemaphore RenderFinishedSemaphore;
-    inline VkFence InFlightFence;
+    inline std::vector<VkCommandBuffer> Commandbuffers;
+    inline std::vector<VkSemaphore> ImageAvailableSemaphores;
+    inline std::vector<VkSemaphore> RenderFinishedSemaphores;
+    inline std::vector<VkFence> InFlightFences;
 
     void InitializeVulkan();
 

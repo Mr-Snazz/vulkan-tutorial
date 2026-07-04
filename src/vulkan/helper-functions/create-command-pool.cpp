@@ -18,12 +18,4 @@ void SNZ::CreateCommandPool()
     CommandPoolCreateInfo.queueFamilyIndex = QueueFamilyIndices.GraphicsFamily.value();
 
     if (vkCreateCommandPool(SNZ::LogicalDevice, &CommandPoolCreateInfo, nullptr, &SNZ::CommandPool) != VK_SUCCESS) throw std::runtime_error("Failed to create command pool!");
-
-    VkCommandBufferAllocateInfo AllocInfo{};
-    AllocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-    AllocInfo.commandPool = SNZ::CommandPool;
-    AllocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-    AllocInfo.commandBufferCount = 1u;
-
-    if (vkAllocateCommandBuffers(SNZ::LogicalDevice, &AllocInfo, &SNZ::Commandbuffer) != VK_SUCCESS) throw std::runtime_error("Failed to allocate command buffers!");
 }

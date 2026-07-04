@@ -20,6 +20,7 @@
 #include "vulkan/helper-functions/create-synchronous-objects.hpp"
 #include "vulkan/helper-functions/create-image-views.hpp"
 #include "vulkan/helper-functions/create-swapchain.hpp"
+#include "vulkan/helper-functions/create-command-buffers.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -205,13 +206,17 @@ void SNZ::InitializeVulkan()
     SNZ::CreateCommandPool();
 
     SNZ::CreateSynchronousObjects();
+
+    SNZ::CreateCommandBuffers();
 }
 
 void SNZ::FreeVulkanResources()
 { 
-    vkDestroySemaphore(SNZ::LogicalDevice, SNZ::ImageAvailableSemaphore, nullptr);
-    vkDestroySemaphore(SNZ::LogicalDevice, SNZ::RenderFinishedSemaphore, nullptr);
-    vkDestroyFence(SNZ::LogicalDevice, SNZ::InFlightFence, nullptr);
+    for (uint8_t I{}; I < SNZ::MaxFramesInFlight; ++I) {
+        vkDestroySemaphore(SNZ::LogicalDevice, SNZ::ImageAvailableSemaphores[I], nullptr);
+        vkDestroySemaphore(SNZ::LogicalDevice, SNZ::RenderFinishedSemaphores[I], nullptr);
+        vkDestroyFence    (SNZ::LogicalDevice, SNZ::InFlightFences          [I], nullptr);
+    }
 
     vkDestroyCommandPool(SNZ::LogicalDevice, SNZ::CommandPool, nullptr);
 
