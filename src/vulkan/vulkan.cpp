@@ -21,6 +21,7 @@
 #include "vulkan/helper-functions/create-image-views.hpp"
 #include "vulkan/helper-functions/create-swapchain.hpp"
 #include "vulkan/helper-functions/create-command-buffers.hpp"
+#include "vulkan/helper-functions/cleanup-swap-chain.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -212,6 +213,8 @@ void SNZ::InitializeVulkan()
 
 void SNZ::FreeVulkanResources()
 { 
+    SNZ::CleanupSwapChain();
+
     for (uint8_t I{}; I < SNZ::MaxFramesInFlight; ++I) {
         vkDestroySemaphore(SNZ::LogicalDevice, SNZ::ImageAvailableSemaphores[I], nullptr);
         vkDestroySemaphore(SNZ::LogicalDevice, SNZ::RenderFinishedSemaphores[I], nullptr);
@@ -220,19 +223,10 @@ void SNZ::FreeVulkanResources()
 
     vkDestroyCommandPool(SNZ::LogicalDevice, SNZ::CommandPool, nullptr);
 
-    for (const auto& Framebuffer : SNZ::SwapChainFramebuffers) {
-        vkDestroyFramebuffer(SNZ::LogicalDevice, Framebuffer, nullptr);
-    }
-
     vkDestroyPipeline(SNZ::LogicalDevice, SNZ::GraphicsPipeline, nullptr);
     vkDestroyPipelineLayout(SNZ::LogicalDevice, SNZ::PipelineLayout, nullptr);
     vkDestroyRenderPass(SNZ::LogicalDevice, SNZ::RenderPass, nullptr);
 
-    for (const auto& ImageView : SNZ::SwapChainImageViews) {
-        vkDestroyImageView(SNZ::LogicalDevice, ImageView, nullptr);
-    }
-
-    vkDestroySwapchainKHR(SNZ::LogicalDevice, SNZ::SwapChain, nullptr);
     vkDestroyDevice(SNZ::LogicalDevice, nullptr);
     vkDestroySurfaceKHR(SNZ::VulkanInstance, SNZ::Surface, nullptr);
     vkDestroyInstance(SNZ::VulkanInstance, nullptr);

@@ -39,6 +39,8 @@ namespace SNZ
     inline std::vector<VkSemaphore> RenderFinishedSemaphores;
     inline std::vector<VkFence> InFlightFences;
 
+    inline bool FramebufferResized{};
+
     void InitializeVulkan();
 
     void FreeVulkanResources();

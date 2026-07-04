@@ -8,6 +8,7 @@
 #include "glfw/glfw.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/record-command-buffer.hpp"
+#include "vulkan/helper-functions/recreate-swap-chain.hpp"
 
 void SNZ::Initialize()
 {
@@ -28,7 +29,17 @@ void SNZ::MainLoop()
         vkResetFences(SNZ::LogicalDevice, 1u, &SNZ::InFlightFences[CurrentFrame]);
 
         uint32_t ImageIndex{};
-        vkAcquireNextImageKHR(SNZ::LogicalDevice, SNZ::SwapChain, UINT64_MAX, SNZ::ImageAvailableSemaphores[CurrentFrame], VK_NULL_HANDLE, &ImageIndex);
+        VkResult Result = vkAcquireNextImageKHR(SNZ::LogicalDevice, SNZ::SwapChain, UINT64_MAX, SNZ::ImageAvailableSemaphores[CurrentFrame], VK_NULL_HANDLE, &ImageIndex);
+
+        if (Result == VK_ERROR_OUT_OF_DATE_KHR || Result == VK_SUBOPTIMAL_KHR || SNZ::FramebufferResized) {
+            SNZ::FramebufferResized = false;
+            SNZ::RecreateSwapChain();
+            continue;
+        } else if (Result != VK_SUCCESS && Result != VK_SUBOPTIMAL_KHR) {
+            throw std::runtime_error("Failed to aquire swap chain image");
+        }
+
+        vkResetFences(SNZ::LogicalDevice, 1u, &SNZ::InFlightFences[CurrentFrame]);
 
         vkResetCommandBuffer(SNZ::Commandbuffers[CurrentFrame], 0);
         SNZ::RecordCommandBuffer(SNZ::Commandbuffers[CurrentFrame], ImageIndex);
