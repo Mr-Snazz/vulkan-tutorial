@@ -26,6 +26,8 @@
 #include "vulkan/helper-functions/create-index-buffer.hpp"
 #include "vulkan/helper-functions/create-descriptor-set-layout.hpp"
 #include "vulkan/helper-functions/create-uniform-buffers.hpp"
+#include "vulkan/helper-functions/create-descriptor-pool.hpp"
+#include "vulkan/helper-functions/create-descriptor-sets.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -145,20 +147,25 @@ void SNZ::InitializeVulkan()
     // Choose logical device to interface with 
     SNZ::QueueFamilyIndices Indices = SNZ::FindQueueFamilies(SNZ::PhysicalDevice);
 
-    VkDeviceQueueCreateInfo QueueCreateInfo{};
-    QueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-    QueueCreateInfo.queueFamilyIndex = Indices.GraphicsFamily.value();
-    QueueCreateInfo.queueCount = 1u;
-
     float QueuePriority = 1.0f;
-    QueueCreateInfo.pQueuePriorities = &QueuePriority;
+    std::vector<VkDeviceQueueCreateInfo> QueueCreateInfos;
+    std::set<uint32_t> UniqueQueueFamilies = { Indices.GraphicsFamily.value(), Indices.PresentFamily.value() };
+
+    for (uint32_t QueueFamily : UniqueQueueFamilies) {
+        VkDeviceQueueCreateInfo QueueCreateInfo{};
+        QueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+        QueueCreateInfo.queueFamilyIndex = QueueFamily;
+        QueueCreateInfo.queueCount = 1u;
+        QueueCreateInfo.pQueuePriorities = &QueuePriority;
+        QueueCreateInfos.push_back(QueueCreateInfo);
+    }
 
     VkPhysicalDeviceFeatures DeviceFeatures{};
 
     VkDeviceCreateInfo DeviceCreateInfo{};
     DeviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    DeviceCreateInfo.pQueueCreateInfos = &QueueCreateInfo;
-    DeviceCreateInfo.queueCreateInfoCount = 1u;
+    DeviceCreateInfo.pQueueCreateInfos = QueueCreateInfos.data();
+    DeviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(QueueCreateInfos.size());
     DeviceCreateInfo.pEnabledFeatures = &DeviceFeatures;
 
     DeviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(DeviceExtensions.size());
@@ -179,23 +186,6 @@ void SNZ::InitializeVulkan()
 
     // Retrieve queue handles
     vkGetDeviceQueue(SNZ::LogicalDevice, Indices.GraphicsFamily.value(), 0u, &SNZ::GraphicsQueue);
-
-    // Create presentation queue
-    std::vector<VkDeviceQueueCreateInfo> QueueCreateInfos;
-    std::set<uint32_t> UniqueQueueFamilies = { Indices.GraphicsFamily.value(), Indices.PresentFamily.value() };
-
-    QueuePriority = 1.0f;
-    for (uint32_t QueueFamily : UniqueQueueFamilies) {
-        QueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        QueueCreateInfo.queueFamilyIndex = QueueFamily;
-        QueueCreateInfo.queueCount = 1u;
-        QueueCreateInfo.pQueuePriorities = &QueuePriority;
-        QueueCreateInfos.push_back(QueueCreateInfo);
-    }
-
-    DeviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(QueueCreateInfos.size());
-    DeviceCreateInfo.pQueueCreateInfos = QueueCreateInfos.data();
-
     vkGetDeviceQueue(SNZ::LogicalDevice, Indices.PresentFamily.value(), 0u, &SNZ::PresentQueue);
 
     SNZ::CreateSwapchain();
@@ -218,6 +208,10 @@ void SNZ::InitializeVulkan()
 
     SNZ::CreateUniformBuffers();
 
+    SNZ::CreateDescriptorPool();
+
+    SNZ::CreateDescriptorSets();
+
     SNZ::CreateSynchronousObjects();
 
     SNZ::CreateCommandBuffers();
@@ -232,6 +226,7 @@ void SNZ::FreeVulkanResources()
         vkFreeMemory(SNZ::LogicalDevice, SNZ::UniformBuffersMemory[I], nullptr);
     }
 
+    vkDestroyDescriptorPool(SNZ::LogicalDevice, SNZ::DescriptorPool, nullptr);
     vkDestroyDescriptorSetLayout(SNZ::LogicalDevice, SNZ::DescriptorSetLayout, nullptr);
 
     vkDestroyBuffer(SNZ::LogicalDevice, SNZ::IndexBuffer, nullptr);

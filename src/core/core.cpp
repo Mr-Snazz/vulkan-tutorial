@@ -45,7 +45,7 @@ void SNZ::MainLoop()
         SNZ::UpdateUniformBuffer(CurrentFrame);
 
         vkResetCommandBuffer(SNZ::Commandbuffers[CurrentFrame], 0);
-        SNZ::RecordCommandBuffer(SNZ::Commandbuffers[CurrentFrame], ImageIndex);
+        SNZ::RecordCommandBuffer(SNZ::Commandbuffers[CurrentFrame], ImageIndex, CurrentFrame);
 
         VkSubmitInfo SubmitInfo{};
         SubmitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;

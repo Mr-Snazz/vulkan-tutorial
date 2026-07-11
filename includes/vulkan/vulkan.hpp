@@ -66,6 +66,9 @@ namespace SNZ
     inline std::vector<VkDeviceMemory> UniformBuffersMemory;
     inline std::vector<void*> UniformbuffersMapped;
 
+    inline VkDescriptorPool DescriptorPool;
+    inline std::vector<VkDescriptorSet> DescriptorSets;
+
     inline bool FramebufferResized{};
 
     void InitializeVulkan();

@@ -82,7 +82,7 @@ void SNZ::CreateGraphicsPipeline(const VkDevice& LogicalDevice)
     Rasterizer.rasterizerDiscardEnable = VK_FALSE;
     Rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
     Rasterizer.lineWidth = 1.0f;
-    Rasterizer.cullMode = VK_CULL_MODE_NONE;
+    Rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
     Rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
     Rasterizer.depthBiasEnable = VK_FALSE;
     Rasterizer.depthBiasConstantFactor = 0.0f; // Optional
@@ -121,8 +121,8 @@ void SNZ::CreateGraphicsPipeline(const VkDevice& LogicalDevice)
 
     VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
     pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-    pipelineLayoutInfo.setLayoutCount = 0u; // Optional
-    pipelineLayoutInfo.pSetLayouts = nullptr; // Optional
+    pipelineLayoutInfo.setLayoutCount = 1u;
+    pipelineLayoutInfo.pSetLayouts = &SNZ::DescriptorSetLayout;
     pipelineLayoutInfo.pushConstantRangeCount = 0u; // Optional
     pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
 

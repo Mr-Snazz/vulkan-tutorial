@@ -3,7 +3,7 @@
 #include "vulkan/helper-functions/record-command-buffer.hpp"
 #include "vulkan/vulkan.hpp"
 
-void SNZ::RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex)
+void SNZ::RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex, uint32_t FrameIndex)
 {
     VkCommandBufferBeginInfo BeginInfo{};
     BeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -46,6 +46,8 @@ void SNZ::RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex
     vkCmdBindVertexBuffers(CommandBuffer, 0u, 1u, VertexBuffers, Offsets);
 
     vkCmdBindIndexBuffer(CommandBuffer, SNZ::IndexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
+    vkCmdBindDescriptorSets(CommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, SNZ::PipelineLayout, 0u, 1u, &SNZ::DescriptorSets[FrameIndex], 0u, nullptr);
 
     vkCmdDrawIndexed(CommandBuffer, static_cast<uint32_t>(SNZ::Indices.size()), 1u, 0u, 0u, 0u);
 

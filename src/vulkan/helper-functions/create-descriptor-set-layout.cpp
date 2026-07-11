@@ -22,10 +22,5 @@ void SNZ::CreateDescriptorSetLayout()
     LayoutInfo.pBindings = &UniformBufferObjectLayoutBinding;
 
     if (vkCreateDescriptorSetLayout(SNZ::LogicalDevice, &LayoutInfo, nullptr, &SNZ::DescriptorSetLayout) != VK_SUCCESS) throw std::runtime_error("Failed to create descriptor set layout");
-
-    VkPipelineLayoutCreateInfo PipelineLayoutInfo{};
-    PipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-    PipelineLayoutInfo.setLayoutCount = 1u;
-    PipelineLayoutInfo.pSetLayouts = &DescriptorSetLayout;
 }
 
