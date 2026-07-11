@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 #define GLFW_INCLUDE_VULKAN
-#include "external/glfw3.h"
+#include <GLFW/glfw3.h>
 
 namespace SNZ
 {

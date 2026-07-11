@@ -3,6 +3,7 @@
 #include "vulkan/helper-functions/create-graphics-pipeline.hpp"
 #include "vulkan/helper-functions/load-shader.hpp"
 #include "vulkan/vulkan.hpp"
+#include "vulkan/vertex.hpp"
 
 void SNZ::CreateGraphicsPipeline(const VkDevice& LogicalDevice)
 {
@@ -29,13 +30,16 @@ void SNZ::CreateGraphicsPipeline(const VkDevice& LogicalDevice)
         VertexShaderStageInfo,
         FragmentShaderStageInfo
     };
+
+    auto BindingDescription    = SNZ::Vertex::GetBindingDescription   ();
+    auto AttributeDescriptions = SNZ::Vertex::GetAttributeDescriptions();
     
     VkPipelineVertexInputStateCreateInfo VertexInputStateCreateInfo{};
     VertexInputStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-    VertexInputStateCreateInfo.vertexBindingDescriptionCount = 0u;
-    VertexInputStateCreateInfo.pVertexBindingDescriptions = nullptr;
-    VertexInputStateCreateInfo.vertexAttributeDescriptionCount = 0u;
-    VertexInputStateCreateInfo.pVertexAttributeDescriptions = nullptr;
+    VertexInputStateCreateInfo.vertexBindingDescriptionCount = 1u;
+    VertexInputStateCreateInfo.pVertexBindingDescriptions = &BindingDescription;
+    VertexInputStateCreateInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(AttributeDescriptions.size());
+    VertexInputStateCreateInfo.pVertexAttributeDescriptions = AttributeDescriptions.data();
 
     std::vector<VkDynamicState> DynamicStates = 
     {

@@ -7,5 +7,5 @@
 
 namespace SNZ
 {
-    void RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex);
+    uint32_t FindMemoryType(uint32_t TypeFilter, VkMemoryPropertyFlags Properties);
 }

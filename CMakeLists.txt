@@ -14,11 +14,13 @@ endif()
 
 find_package(Vulkan REQUIRED)
 
-file(GLOB_RECURSE CPP_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
-file(GLOB_RECURSE C_SOURCES CONFIGURE_DEPENDS   "src/*.c")
+file(GLOB_RECURSE CPP_SOURCES CONFIGURE_DEPENDS "src/*.cpp"       )
+file(GLOB_RECURSE C_SOURCES   CONFIGURE_DEPENDS "src/*.c"         )
 file(GLOB_RECURSE GLAD_SOURCE CONFIGURE_DEPENDS "includes/*glad.c")
 
-add_executable(executable ${CPP_SOURCES} ${C_SOURCES} ${GLAD_SOURCE})
+add_executable(executable ${CPP_SOURCES} ${C_SOURCES} ${GLAD_SOURCE}
+    src/vulkan/vertex.cpp
+    includes/vulkan/vertex.inl)
 
 target_include_directories(executable PRIVATE includes)
 

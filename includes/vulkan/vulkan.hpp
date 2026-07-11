@@ -4,11 +4,21 @@
 
 #include <vector>
 
+#include <glm/glm.hpp>
 #define GLFW_INCLUDE_VULKAN
-#include "external/glfw3.h"
+#include <GLFW/glfw3.h>
+
+#include "vulkan/vertex.hpp"
 
 namespace SNZ
 {
+    inline const std::vector<SNZ::Vertex> Vertices = 
+    {
+        { { 0.0f, -0.5f}, { 1.0f, 0.0f, 0.0f} },
+        { { 0.5f,  0.5f}, { 0.0f, 1.0f, 0.0f} },
+        { {-0.5f,  0.5f}, { 0.0f, 0.0f, 1.0f} }
+    };
+
     constexpr uint8_t MaxFramesInFlight = 2u;
 
     inline VkInstance VulkanInstance;
@@ -38,6 +48,9 @@ namespace SNZ
     inline std::vector<VkSemaphore> ImageAvailableSemaphores;
     inline std::vector<VkSemaphore> RenderFinishedSemaphores;
     inline std::vector<VkFence> InFlightFences;
+
+    inline VkBuffer VertexBuffer;
+    inline VkDeviceMemory VertexBufferMemory;
 
     inline bool FramebufferResized{};
 

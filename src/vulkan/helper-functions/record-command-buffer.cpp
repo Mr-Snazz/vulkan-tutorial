@@ -25,7 +25,7 @@ void SNZ::RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex
 
     vkCmdBeginRenderPass(CommandBuffer, &RenderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-    vkCmdBindPipeline(CommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, GraphicsPipeline);
+    vkCmdBindPipeline(CommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, SNZ::GraphicsPipeline);
 
     VkViewport Viewport{};
     Viewport.x = 0.0f;
@@ -41,7 +41,11 @@ void SNZ::RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex
     Scissor.extent = SNZ::SwapChainExtent;
     vkCmdSetScissor(CommandBuffer, 0, 1, &Scissor);
 
-    vkCmdDraw(CommandBuffer, 3, 1, 0, 0);
+    VkBuffer VertexBuffers[] = { SNZ::VertexBuffer };
+    VkDeviceSize Offsets[] = { 0 };
+    vkCmdBindVertexBuffers(CommandBuffer, 0u, 1u, VertexBuffers, Offsets);
+
+    vkCmdDraw(CommandBuffer, static_cast<uint32_t>(SNZ::Vertices.size()), 1u, 0u, 0u);
 
     vkCmdEndRenderPass(CommandBuffer);
 

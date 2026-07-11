@@ -22,6 +22,7 @@
 #include "vulkan/helper-functions/create-swapchain.hpp"
 #include "vulkan/helper-functions/create-command-buffers.hpp"
 #include "vulkan/helper-functions/cleanup-swap-chain.hpp"
+#include "vulkan/helper-functions/create-vertex-buffer.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -193,7 +194,6 @@ void SNZ::InitializeVulkan()
 
     vkGetDeviceQueue(SNZ::LogicalDevice, Indices.PresentFamily.value(), 0u, &SNZ::PresentQueue);
 
-    // Create swap chain
     SNZ::CreateSwapchain();
 
     SNZ::CreateImageViews();
@@ -206,6 +206,8 @@ void SNZ::InitializeVulkan()
     
     SNZ::CreateCommandPool();
 
+    SNZ::CreateVertexBuffer();
+
     SNZ::CreateSynchronousObjects();
 
     SNZ::CreateCommandBuffers();
@@ -214,6 +216,9 @@ void SNZ::InitializeVulkan()
 void SNZ::FreeVulkanResources()
 { 
     SNZ::CleanupSwapChain();
+
+    vkDestroyBuffer(SNZ::LogicalDevice, SNZ::VertexBuffer, nullptr);
+    vkFreeMemory(SNZ::LogicalDevice, SNZ::VertexBufferMemory, nullptr);
 
     for (uint8_t I{}; I < SNZ::MaxFramesInFlight; ++I) {
         vkDestroySemaphore(SNZ::LogicalDevice, SNZ::ImageAvailableSemaphores[I], nullptr);
