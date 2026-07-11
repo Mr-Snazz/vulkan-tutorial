@@ -63,7 +63,7 @@ void SNZ::MainLoop()
         SubmitInfo.commandBufferCount = 1u;
         SubmitInfo.pCommandBuffers = &SNZ::Commandbuffers[CurrentFrame];
 
-        if (vkQueueSubmit(SNZ::GraphicsQueue, 1, &SubmitInfo, SNZ::InFlightFences[CurrentFrame]) != VK_SUCCESS) throw std::runtime_error("Failed to submit draw command buffer!");
+        if (vkQueueSubmit(SNZ::GraphicsQueue, 1u, &SubmitInfo, SNZ::InFlightFences[CurrentFrame]) != VK_SUCCESS) throw std::runtime_error("Failed to submit draw command buffer!");
 
         VkPresentInfoKHR PresentInfo{};
         PresentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
