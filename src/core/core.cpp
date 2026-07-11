@@ -44,8 +44,8 @@ void SNZ::MainLoop()
 
         SNZ::UpdateUniformBuffer(CurrentFrame);
 
-        vkResetCommandBuffer(SNZ::Commandbuffers[CurrentFrame], 0);
-        SNZ::RecordCommandBuffer(SNZ::Commandbuffers[CurrentFrame], ImageIndex, CurrentFrame);
+        vkResetCommandBuffer(SNZ::CommandBuffers[CurrentFrame], 0);
+        SNZ::RecordCommandBuffer(SNZ::CommandBuffers[CurrentFrame], ImageIndex, CurrentFrame);
 
         VkSubmitInfo SubmitInfo{};
         SubmitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -61,7 +61,7 @@ void SNZ::MainLoop()
         SubmitInfo.signalSemaphoreCount = 1u;
         SubmitInfo.pSignalSemaphores = SignalSemaphores;
         SubmitInfo.commandBufferCount = 1u;
-        SubmitInfo.pCommandBuffers = &SNZ::Commandbuffers[CurrentFrame];
+        SubmitInfo.pCommandBuffers = &SNZ::CommandBuffers[CurrentFrame];
 
         if (vkQueueSubmit(SNZ::GraphicsQueue, 1u, &SubmitInfo, SNZ::InFlightFences[CurrentFrame]) != VK_SUCCESS) throw std::runtime_error("Failed to submit draw command buffer!");
 

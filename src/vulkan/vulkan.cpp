@@ -28,6 +28,7 @@
 #include "vulkan/helper-functions/create-uniform-buffers.hpp"
 #include "vulkan/helper-functions/create-descriptor-pool.hpp"
 #include "vulkan/helper-functions/create-descriptor-sets.hpp"
+#include "vulkan/helper-functions/create-texture-image.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -202,6 +203,8 @@ void SNZ::InitializeVulkan()
     
     SNZ::CreateCommandPool();
 
+    SNZ::CreateTextureImage();
+
     SNZ::CreateVertexBuffer();
 
     SNZ::CreateIndexBuffer();
@@ -220,6 +223,8 @@ void SNZ::InitializeVulkan()
 void SNZ::FreeVulkanResources()
 { 
     SNZ::CleanupSwapChain();
+
+    vkDestroyImage(SNZ::LogicalDevice, TextureImage, nullptr);
 
     for (uint8_t I{}; I < SNZ::MaxFramesInFlight; ++I) {
         vkDestroyBuffer(SNZ::LogicalDevice, SNZ::UniformBuffers[I], nullptr);

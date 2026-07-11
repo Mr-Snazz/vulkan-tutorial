@@ -52,7 +52,7 @@ namespace SNZ
 
     inline VkCommandPool CommandPool;
 
-    inline std::vector<VkCommandBuffer> Commandbuffers;
+    inline std::vector<VkCommandBuffer> CommandBuffers;
     inline std::vector<VkSemaphore> ImageAvailableSemaphores;
     inline std::vector<VkSemaphore> RenderFinishedSemaphores;
     inline std::vector<VkFence> InFlightFences;
@@ -68,6 +68,9 @@ namespace SNZ
 
     inline VkDescriptorPool DescriptorPool;
     inline std::vector<VkDescriptorSet> DescriptorSets;
+
+    inline VkImage TextureImage;
+    inline VkDeviceMemory TextureImageMemory;
 
     inline bool FramebufferResized{};
 

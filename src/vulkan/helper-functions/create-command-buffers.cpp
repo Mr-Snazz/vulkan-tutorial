@@ -8,13 +8,13 @@
 
 void SNZ::CreateCommandBuffers()
 {
-    SNZ::Commandbuffers.resize(SNZ::MaxFramesInFlight);
+    SNZ::CommandBuffers.resize(SNZ::MaxFramesInFlight);
 
     VkCommandBufferAllocateInfo AllocateInfo{};
     AllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
     AllocateInfo.commandPool = SNZ::CommandPool;
     AllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-    AllocateInfo.commandBufferCount = SNZ::Commandbuffers.size();
+    AllocateInfo.commandBufferCount = SNZ::CommandBuffers.size();
 
-    if (vkAllocateCommandBuffers(SNZ::LogicalDevice, &AllocateInfo, SNZ::Commandbuffers.data()) != VK_SUCCESS) throw std::runtime_error("Failed to allocate command buffers");
+    if (vkAllocateCommandBuffers(SNZ::LogicalDevice, &AllocateInfo, SNZ::CommandBuffers.data()) != VK_SUCCESS) throw std::runtime_error("Failed to allocate command buffers");
 }
