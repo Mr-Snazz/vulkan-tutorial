@@ -45,7 +45,9 @@ void SNZ::RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex
     VkDeviceSize Offsets[] = { 0 };
     vkCmdBindVertexBuffers(CommandBuffer, 0u, 1u, VertexBuffers, Offsets);
 
-    vkCmdDraw(CommandBuffer, static_cast<uint32_t>(SNZ::Vertices.size()), 1u, 0u, 0u);
+    vkCmdBindIndexBuffer(CommandBuffer, SNZ::IndexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
+    vkCmdDrawIndexed(CommandBuffer, static_cast<uint32_t>(SNZ::Indices.size()), 1u, 0u, 0u, 0u);
 
     vkCmdEndRenderPass(CommandBuffer);
 

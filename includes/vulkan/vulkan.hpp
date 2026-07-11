@@ -14,9 +14,16 @@ namespace SNZ
 {
     inline const std::vector<SNZ::Vertex> Vertices = 
     {
-        { { 0.0f, -0.5f}, { 1.0f, 0.0f, 0.0f} },
-        { { 0.5f,  0.5f}, { 0.0f, 1.0f, 0.0f} },
-        { {-0.5f,  0.5f}, { 0.0f, 0.0f, 1.0f} }
+        { {-0.5f, -0.5f }, { 1.0f, 0.0f, 0.0f } },
+        { { 0.5f, -0.5f }, { 0.0f, 1.0f, 0.0f } },
+        { { 0.5f,  0.5f }, { 0.0f, 0.0f, 1.0f } },
+        { {-0.5f,  0.5f }, { 1.0f, 1.0f, 1.0f } }
+    };
+
+    inline const std::vector<uint16_t> Indices = 
+    {
+        0u, 1u, 2u,
+        2u, 3u, 0u
     };
 
     constexpr uint8_t MaxFramesInFlight = 2u;
@@ -51,6 +58,8 @@ namespace SNZ
 
     inline VkBuffer VertexBuffer;
     inline VkDeviceMemory VertexBufferMemory;
+    inline VkBuffer IndexBuffer;
+    inline VkDeviceMemory IndexBufferMemory;
 
     inline bool FramebufferResized{};
 

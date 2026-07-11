@@ -20,7 +20,8 @@ file(GLOB_RECURSE GLAD_SOURCE CONFIGURE_DEPENDS "includes/*glad.c")
 
 add_executable(executable ${CPP_SOURCES} ${C_SOURCES} ${GLAD_SOURCE}
     src/vulkan/vertex.cpp
-    includes/vulkan/vertex.inl)
+    includes/vulkan/vertex.inl
+    src/vulkan/helper-functions/create-index-buffer.cpp)
 
 target_include_directories(executable PRIVATE includes)
 

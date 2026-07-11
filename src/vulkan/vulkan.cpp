@@ -23,6 +23,7 @@
 #include "vulkan/helper-functions/create-command-buffers.hpp"
 #include "vulkan/helper-functions/cleanup-swap-chain.hpp"
 #include "vulkan/helper-functions/create-vertex-buffer.hpp"
+#include "vulkan/helper-functions/create-index-buffer.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -173,6 +174,7 @@ void SNZ::InitializeVulkan()
         exit(EXIT_FAILURE);
     }
 
+
     // Retrieve queue handles
     vkGetDeviceQueue(SNZ::LogicalDevice, Indices.GraphicsFamily.value(), 0u, &SNZ::GraphicsQueue);
 
@@ -208,6 +210,8 @@ void SNZ::InitializeVulkan()
 
     SNZ::CreateVertexBuffer();
 
+    SNZ::CreateIndexBuffer();
+
     SNZ::CreateSynchronousObjects();
 
     SNZ::CreateCommandBuffers();
@@ -216,6 +220,9 @@ void SNZ::InitializeVulkan()
 void SNZ::FreeVulkanResources()
 { 
     SNZ::CleanupSwapChain();
+
+    vkDestroyBuffer(SNZ::LogicalDevice, SNZ::IndexBuffer, nullptr);
+    vkFreeMemory(SNZ::LogicalDevice, SNZ::IndexBufferMemory, nullptr);
 
     vkDestroyBuffer(SNZ::LogicalDevice, SNZ::VertexBuffer, nullptr);
     vkFreeMemory(SNZ::LogicalDevice, SNZ::VertexBufferMemory, nullptr);
