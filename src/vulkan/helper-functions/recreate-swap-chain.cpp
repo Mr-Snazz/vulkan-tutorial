@@ -7,6 +7,9 @@
 #include "vulkan/helper-functions/create-image-views.hpp"
 #include "vulkan/helper-functions/create-framebuffers.hpp"
 #include "glfw/glfw.hpp"
+#include "vulkan/helper-functions/cleanup-swap-chain.hpp"
+
+#include <glm/glm.hpp>
 
 void SNZ::RecreateSwapChain()
 {
@@ -19,6 +22,8 @@ void SNZ::RecreateSwapChain()
     }
 
     vkDeviceWaitIdle(SNZ::LogicalDevice);
+
+    SNZ::CleanupSwapChain();
 
     SNZ::CreateSwapchain();
     SNZ::CreateImageViews();

@@ -22,6 +22,14 @@ add_executable(executable ${CPP_SOURCES} ${C_SOURCES} ${GLAD_SOURCE})
 
 target_include_directories(executable PRIVATE includes)
 
+# -> GLM
+add_subdirectory("dependencies/glm")
+if (TARGET glm AND NOT MSVC)
+    target_compile_options(glm PRIVATE -w)
+endif()
+
+# <- GLM
+
 # -> GLFW
 add_subdirectory("dependencies/glfw")
 
@@ -30,9 +38,11 @@ if (TARGET glfw AND NOT MSVC)
 endif()
 # -> GLFW
 
-target_link_libraries(executable PRIVATE
+target_link_libraries(
+    executable PRIVATE
     Vulkan::Vulkan
     glfw
+    glm
 )
 
 set_target_properties(executable PROPERTIES
