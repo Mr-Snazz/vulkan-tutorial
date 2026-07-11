@@ -24,6 +24,8 @@
 #include "vulkan/helper-functions/cleanup-swap-chain.hpp"
 #include "vulkan/helper-functions/create-vertex-buffer.hpp"
 #include "vulkan/helper-functions/create-index-buffer.hpp"
+#include "vulkan/helper-functions/create-descriptor-set-layout.hpp"
+#include "vulkan/helper-functions/create-uniform-buffers.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -202,6 +204,8 @@ void SNZ::InitializeVulkan()
 
     SNZ::CreateRenderPass();
 
+    SNZ::CreateDescriptorSetLayout();
+
     SNZ::CreateGraphicsPipeline(SNZ::LogicalDevice);
 
     SNZ::CreateFramebuffers();
@@ -212,6 +216,8 @@ void SNZ::InitializeVulkan()
 
     SNZ::CreateIndexBuffer();
 
+    SNZ::CreateUniformBuffers();
+
     SNZ::CreateSynchronousObjects();
 
     SNZ::CreateCommandBuffers();
@@ -220,6 +226,13 @@ void SNZ::InitializeVulkan()
 void SNZ::FreeVulkanResources()
 { 
     SNZ::CleanupSwapChain();
+
+    for (uint8_t I{}; I < SNZ::MaxFramesInFlight; ++I) {
+        vkDestroyBuffer(SNZ::LogicalDevice, SNZ::UniformBuffers[I], nullptr);
+        vkFreeMemory(SNZ::LogicalDevice, SNZ::UniformBuffersMemory[I], nullptr);
+    }
+
+    vkDestroyDescriptorSetLayout(SNZ::LogicalDevice, SNZ::DescriptorSetLayout, nullptr);
 
     vkDestroyBuffer(SNZ::LogicalDevice, SNZ::IndexBuffer, nullptr);
     vkFreeMemory(SNZ::LogicalDevice, SNZ::IndexBufferMemory, nullptr);

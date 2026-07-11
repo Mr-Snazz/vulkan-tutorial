@@ -18,10 +18,12 @@ file(GLOB_RECURSE CPP_SOURCES CONFIGURE_DEPENDS "src/*.cpp"       )
 file(GLOB_RECURSE C_SOURCES   CONFIGURE_DEPENDS "src/*.c"         )
 file(GLOB_RECURSE GLAD_SOURCE CONFIGURE_DEPENDS "includes/*glad.c")
 
-add_executable(executable ${CPP_SOURCES} ${C_SOURCES} ${GLAD_SOURCE}
-    src/vulkan/vertex.cpp
-    includes/vulkan/vertex.inl
-    src/vulkan/helper-functions/create-index-buffer.cpp)
+add_executable(
+    executable 
+    ${CPP_SOURCES} ${C_SOURCES} ${GLAD_SOURCE}
+)
+target_compile_definitions(executable PRIVATE GLM_FORCE_DEPTH_ZERO_TO_ONE)
+target_compile_definitions(executable PRIVATE GLM_FORCE_RADIANS)
 
 target_include_directories(executable PRIVATE includes)
 

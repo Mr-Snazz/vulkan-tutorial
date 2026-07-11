@@ -9,6 +9,7 @@
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/record-command-buffer.hpp"
 #include "vulkan/helper-functions/recreate-swap-chain.hpp"
+#include "vulkan/helper-functions/update-uniform-buffer.hpp"
 
 void SNZ::Initialize()
 {
@@ -40,6 +41,8 @@ void SNZ::MainLoop()
         }
 
         vkResetFences(SNZ::LogicalDevice, 1u, &SNZ::InFlightFences[CurrentFrame]);
+
+        SNZ::UpdateUniformBuffer(CurrentFrame);
 
         vkResetCommandBuffer(SNZ::Commandbuffers[CurrentFrame], 0);
         SNZ::RecordCommandBuffer(SNZ::Commandbuffers[CurrentFrame], ImageIndex);

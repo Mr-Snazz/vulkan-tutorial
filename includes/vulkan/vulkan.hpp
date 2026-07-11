@@ -46,6 +46,7 @@ namespace SNZ
     inline std::vector<VkFramebuffer> SwapChainFramebuffers;
 
     inline VkRenderPass RenderPass;
+    inline VkDescriptorSetLayout DescriptorSetLayout;
     inline VkPipelineLayout PipelineLayout;
     inline VkPipeline GraphicsPipeline;
 
@@ -60,6 +61,10 @@ namespace SNZ
     inline VkDeviceMemory VertexBufferMemory;
     inline VkBuffer IndexBuffer;
     inline VkDeviceMemory IndexBufferMemory;
+
+    inline std::vector<VkBuffer> UniformBuffers;
+    inline std::vector<VkDeviceMemory> UniformBuffersMemory;
+    inline std::vector<void*> UniformbuffersMapped;
 
     inline bool FramebufferResized{};
 
