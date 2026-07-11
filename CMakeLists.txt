@@ -18,14 +18,20 @@ file(GLOB_RECURSE CPP_SOURCES CONFIGURE_DEPENDS "src/*.cpp"       )
 file(GLOB_RECURSE C_SOURCES   CONFIGURE_DEPENDS "src/*.c"         )
 file(GLOB_RECURSE GLAD_SOURCE CONFIGURE_DEPENDS "includes/*glad.c")
 
+set(ProjectName "vulkan-tutorial-x86_64")
+
 add_executable(
-    executable 
+    ${ProjectName} 
     ${CPP_SOURCES} ${C_SOURCES} ${GLAD_SOURCE}
 )
-target_compile_definitions(executable PRIVATE GLM_FORCE_DEPTH_ZERO_TO_ONE)
-target_compile_definitions(executable PRIVATE GLM_FORCE_RADIANS)
+target_compile_definitions(${ProjectName} PRIVATE GLM_FORCE_DEPTH_ZERO_TO_ONE)
+target_compile_definitions(${ProjectName} PRIVATE GLM_FORCE_RADIANS)
 
-target_include_directories(executable PRIVATE includes)
+target_include_directories(${ProjectName} PRIVATE includes)
+
+# -> STB
+target_include_directories(${ProjectName} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb)
+# <- STB
 
 # -> GLM
 add_subdirectory("dependencies/glm")
@@ -44,13 +50,13 @@ endif()
 # -> GLFW
 
 target_link_libraries(
-    executable PRIVATE
+    ${ProjectName} PRIVATE
     Vulkan::Vulkan
     glfw
     glm
 )
 
-set_target_properties(executable PROPERTIES
+set_target_properties(${ProjectName} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
 )
 
@@ -102,6 +108,6 @@ add_custom_target(
     DEPENDS ${COMPILED_SHADERS}
 )
 
-add_dependencies(executable shaders)
+add_dependencies(${ProjectName} shaders)
 
 # <- Compile shaders
