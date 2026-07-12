@@ -1,11 +1,11 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/recreate-swap-chain.hpp"
+#include "vulkan/initialization-functions/recreate-swap-chain.hpp"
 #include "vulkan/vulkan.hpp"
-#include "vulkan/helper-functions/create-swapchain.hpp"
-#include "vulkan/helper-functions/create-image-views.hpp"
-#include "vulkan/helper-functions/create-framebuffers.hpp"
+#include "vulkan/initialization-functions/create-swapchain.hpp"
+#include "vulkan/initialization-functions/create-image-views.hpp"
+#include "vulkan/initialization-functions/create-framebuffers.hpp"
 #include "glfw/glfw.hpp"
 #include "vulkan/helper-functions/cleanup-swap-chain.hpp"
 

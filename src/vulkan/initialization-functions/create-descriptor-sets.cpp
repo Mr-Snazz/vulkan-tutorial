@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <array>
 
-#include "vulkan/helper-functions/create-descriptor-sets.hpp"
+#include "vulkan/initialization-functions/create-descriptor-sets.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/uniform-buffer-object.hpp"
 

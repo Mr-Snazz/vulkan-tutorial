@@ -3,7 +3,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-render-pass.hpp"
+#include "vulkan/initialization-functions/create-render-pass.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/find-depth-format.hpp"
 

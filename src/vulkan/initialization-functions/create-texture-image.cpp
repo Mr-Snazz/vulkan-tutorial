@@ -7,13 +7,13 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-texture-image.hpp"
+#include "vulkan/initialization-functions/create-texture-image.hpp"
 #include "vulkan/helper-functions/create-buffer.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/find-memory-type.hpp"
 #include "vulkan/helper-functions/create-image.hpp"
 #include "vulkan/helper-functions/transition-image-layout.hpp"
-#include "vulkan/helper-functions/copy-buffer-to-image.hpp"
+#include "vulkan/initialization-functions/copy-buffer-to-image.hpp"
 
 void SNZ::CreateTextureImage()
 {

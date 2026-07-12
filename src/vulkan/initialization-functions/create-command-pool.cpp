@@ -3,7 +3,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-command-pool.hpp"
+#include "vulkan/initialization-functions/create-command-pool.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/queue-family-indices.hpp"
 #include "vulkan/helper-functions/find-queue-families.hpp"

@@ -3,7 +3,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-synchronous-objects.hpp"
+#include "vulkan/initialization-functions/create-synchronous-objects.hpp"
 #include "vulkan/vulkan.hpp"
 
 void SNZ::CreateSynchronousObjects()

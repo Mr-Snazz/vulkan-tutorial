@@ -3,7 +3,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-index-buffer.hpp"
+#include "vulkan/initialization-functions/create-index-buffer.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/create-buffer.hpp"
 #include "vulkan/helper-functions/copy-buffer.hpp"

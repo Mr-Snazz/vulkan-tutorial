@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <array>
 
-#include "vulkan/helper-functions/create-descriptor-pool.hpp"
+#include "vulkan/initialization-functions/create-descriptor-pool.hpp"
 #include "vulkan/vulkan.hpp"
 
 void SNZ::CreateDescriptorPool()

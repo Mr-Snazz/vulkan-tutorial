@@ -1,4 +1,4 @@
-#include "vulkan/helper-functions/copy-buffer-to-image.hpp"
+#include "vulkan/initialization-functions/copy-buffer-to-image.hpp"
 #include "vulkan/helper-functions/begin-and-end-single-time-commands.hpp"
 
 void SNZ::CopyBufferToImage(VkBuffer Buffer, VkImage Image, uint32_t Width, uint32_t Height)

@@ -1,7 +1,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-uniform-buffers.hpp"
+#include "vulkan/initialization-functions/create-uniform-buffers.hpp"
 #include "vulkan/uniform-buffer-object.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/create-buffer.hpp"

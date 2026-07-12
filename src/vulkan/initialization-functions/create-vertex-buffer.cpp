@@ -4,7 +4,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-vertex-buffer.hpp"
+#include "vulkan/initialization-functions/create-vertex-buffer.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/find-memory-type.hpp"
 #include "vulkan/helper-functions/create-buffer.hpp"

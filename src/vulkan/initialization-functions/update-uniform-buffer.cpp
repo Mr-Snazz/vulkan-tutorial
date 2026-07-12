@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "vulkan/helper-functions/update-uniform-buffer.hpp"
+#include "vulkan/initialization-functions/update-uniform-buffer.hpp"
 #include "vulkan/uniform-buffer-object.hpp"
 #include "vulkan/vulkan.hpp"
 

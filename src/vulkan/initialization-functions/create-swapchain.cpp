@@ -3,7 +3,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-swapchain.hpp"
+#include "vulkan/initialization-functions/create-swapchain.hpp"
 #include "vulkan/queue-family-indices.hpp"
 #include "vulkan/helper-functions/swap-chain-support-details.hpp"
 #include "vulkan/vulkan.hpp"

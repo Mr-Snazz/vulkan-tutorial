@@ -8,8 +8,8 @@
 #include "glfw/glfw.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/record-command-buffer.hpp"
-#include "vulkan/helper-functions/recreate-swap-chain.hpp"
-#include "vulkan/helper-functions/update-uniform-buffer.hpp"
+#include "vulkan/initialization-functions/recreate-swap-chain.hpp"
+#include "vulkan/initialization-functions/update-uniform-buffer.hpp"
 
 void SNZ::Initialize()
 {

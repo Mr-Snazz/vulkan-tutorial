@@ -4,7 +4,7 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "vulkan/helper-functions/create-descriptor-set-layout.hpp"
+#include "vulkan/initialization-functions/create-descriptor-set-layout.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/vulkan.hpp"
 
