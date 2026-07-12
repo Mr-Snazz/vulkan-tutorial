@@ -29,6 +29,22 @@ target_compile_definitions(${ProjectName} PRIVATE GLM_FORCE_RADIANS)
 
 target_include_directories(${ProjectName} PRIVATE includes)
 
+# -> Assimp
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE) 
+
+# CRITICAL FIX: Force Assimp to build and use its internal zlib copy
+set(ASSIMP_BUILD_ZLIB ON CACHE BOOL "" FORCE)
+
+add_subdirectory("dependencies/assimp")
+
+if (TARGET assimp AND NOT MSVC)
+    target_compile_options(assimp PRIVATE -w)
+endif()
+# <- Assimp
+
 # -> STB
 target_include_directories(${ProjectName} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb)
 # <- STB
@@ -54,6 +70,7 @@ target_link_libraries(
     Vulkan::Vulkan
     glfw
     glm
+    assimp
 )
 
 set_target_properties(${ProjectName} PROPERTIES
@@ -83,7 +100,7 @@ file(GLOB_RECURSE SHADER_FILES
 set(COMPILED_SHADERS)
 
 foreach(SHADER ${SHADER_FILES})
-    get_filename_component(SHADER_NAME "${SHADER}" NAME_WE)
+    get_filename_component(SHADER_NAME "${SHADER}" NAME)
     get_filename_component(SHADER_EXT "${SHADER}" EXT)
 
     set(OUTPUT "${SHADER_OUTPUT_DIR}/${SHADER_NAME}.spv")
