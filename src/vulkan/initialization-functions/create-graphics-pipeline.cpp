@@ -7,8 +7,8 @@
 
 void SNZ::CreateGraphicsPipeline(const VkDevice& LogicalDevice)
 {
-    std::vector<char> VertexShaderCode = SNZ::LoadShader(std::string("vertex.spv"));
-    std::vector<char> FragmentShaderCode = SNZ::LoadShader(std::string("fragment.spv"));
+    std::vector<char> VertexShaderCode = SNZ::LoadShader(std::string("vertex.vert.spv"));
+    std::vector<char> FragmentShaderCode = SNZ::LoadShader(std::string("fragment.frag.spv"));
 
     VkShaderModule VertexShaderModule = SNZ::CreateShaderModule(LogicalDevice, VertexShaderCode);
     VkShaderModule FragmentShaderModule = SNZ::CreateShaderModule(LogicalDevice, FragmentShaderCode);
