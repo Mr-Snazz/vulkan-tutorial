@@ -71,6 +71,8 @@ namespace SNZ
 
     inline VkImage TextureImage;
     inline VkDeviceMemory TextureImageMemory;
+    inline VkImageView TextureImageView;
+    inline VkSampler TextureSampler;
 
     inline bool FramebufferResized{};
 

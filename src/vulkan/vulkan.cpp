@@ -29,6 +29,8 @@
 #include "vulkan/helper-functions/create-descriptor-pool.hpp"
 #include "vulkan/helper-functions/create-descriptor-sets.hpp"
 #include "vulkan/helper-functions/create-texture-image.hpp"
+#include "vulkan/helper-functions/create-texture-image-view.hpp"
+#include "vulkan/helper-functions/create-texture-sampler.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -162,6 +164,7 @@ void SNZ::InitializeVulkan()
     }
 
     VkPhysicalDeviceFeatures DeviceFeatures{};
+    DeviceFeatures.samplerAnisotropy = VK_TRUE;
 
     VkDeviceCreateInfo DeviceCreateInfo{};
     DeviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -205,6 +208,10 @@ void SNZ::InitializeVulkan()
 
     SNZ::CreateTextureImage();
 
+    SNZ::CreateTextureImageView();
+
+    SNZ::CreateTextureSampler();
+
     SNZ::CreateVertexBuffer();
 
     SNZ::CreateIndexBuffer();
@@ -224,7 +231,11 @@ void SNZ::FreeVulkanResources()
 { 
     SNZ::CleanupSwapChain();
 
+    vkDestroySampler(SNZ::LogicalDevice, SNZ::TextureSampler, nullptr);
+    vkDestroyImageView(SNZ::LogicalDevice, SNZ::TextureImageView, nullptr);
+
     vkDestroyImage(SNZ::LogicalDevice, TextureImage, nullptr);
+    vkFreeMemory(SNZ::LogicalDevice, SNZ::TextureImageMemory, nullptr);
 
     for (uint8_t I{}; I < SNZ::MaxFramesInFlight; ++I) {
         vkDestroyBuffer(SNZ::LogicalDevice, SNZ::UniformBuffers[I], nullptr);

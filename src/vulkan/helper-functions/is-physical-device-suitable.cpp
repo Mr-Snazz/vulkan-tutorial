@@ -19,5 +19,10 @@ bool SNZ::IsPhysicalDeviceSuitable(const VkPhysicalDevice& Device, const std::ve
     }
     if (!SwapChainAdequate) return false;
 
+    VkPhysicalDeviceFeatures SupportedFeatures{};
+    vkGetPhysicalDeviceFeatures(Device, &SupportedFeatures);
+
+    if (!SupportedFeatures.samplerAnisotropy) return false;
+
     return true;
 }
