@@ -81,6 +81,7 @@ namespace SNZ
     inline VkDescriptorPool DescriptorPool;
     inline std::vector<VkDescriptorSet> DescriptorSets;
 
+    inline uint32_t MipLevels;
     inline VkImage TextureImage;
     inline VkDeviceMemory TextureImageMemory;
     inline VkImageView TextureImageView;

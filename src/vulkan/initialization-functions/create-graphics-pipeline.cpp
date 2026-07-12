@@ -1,6 +1,6 @@
 #include <stdexcept>
 
-#include "vulkan/helper-functions/create-graphics-pipeline.hpp"
+#include "vulkan/initialization-functions/create-graphics-pipeline.hpp"
 #include "vulkan/helper-functions/load-shader.hpp"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/vertex.hpp"

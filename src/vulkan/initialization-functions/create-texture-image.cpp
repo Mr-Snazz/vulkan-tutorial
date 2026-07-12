@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <cstring>
+#include <cmath>
 
 #include "stb_image.h"
 #define GLFW_INCLUDE_VULKAN
@@ -22,6 +23,7 @@ void SNZ::CreateTextureImage()
 
     if (!Pixels) throw std::runtime_error("Failed to laod texture image");
 
+    SNZ::MipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(Width, Height)))) + 1u;
     VkDeviceSize ImageSize = Width * Height * 4;
 
     VkBuffer StagingBuffer{};
