@@ -4,7 +4,7 @@
 #include "vulkan/vulkan.hpp"
 #include "vulkan/helper-functions/find-memory-type.hpp"
 
-void SNZ::CreateImage(uint32_t Width, uint32_t Height, VkFormat Format, VkImageTiling Tiling, VkImageUsageFlags Usage, VkMemoryPropertyFlags Properties, VkImage& Image, VkDeviceMemory& ImageMemory)
+void SNZ::CreateImage(uint32_t Width, uint32_t Height, uint32_t MipLevels, VkFormat Format, VkImageTiling Tiling, VkImageUsageFlags Usage, VkMemoryPropertyFlags Properties, VkImage& Image, VkDeviceMemory& ImageMemory)
 {
     VkImageCreateInfo ImageInfo{};
     ImageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -12,7 +12,7 @@ void SNZ::CreateImage(uint32_t Width, uint32_t Height, VkFormat Format, VkImageT
     ImageInfo.extent.width = Width;
     ImageInfo.extent.height = Height;
     ImageInfo.extent.depth = 1u;
-    ImageInfo.mipLevels = 1u;
+    ImageInfo.mipLevels = MipLevels;
     ImageInfo.arrayLayers = 1u;
     ImageInfo.format = Format;
     ImageInfo.tiling = Tiling;

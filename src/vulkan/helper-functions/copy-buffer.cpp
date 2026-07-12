@@ -4,7 +4,7 @@
 
 void SNZ::CopyBuffer(VkBuffer SourceBuffer, VkBuffer DestinationBuffer, VkDeviceSize Size)
 {
-    VkCommandBuffer CommandBuffer = SNZ::BegingSingleTimeCommands();
+    VkCommandBuffer CommandBuffer = SNZ::BeginSingleTimeCommands();
 
     VkBufferCopy CopyRegion{};
     CopyRegion.srcOffset = 0;

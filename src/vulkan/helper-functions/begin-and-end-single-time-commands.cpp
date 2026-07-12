@@ -3,7 +3,7 @@
 #include "vulkan/helper-functions/begin-and-end-single-time-commands.hpp"
 #include "vulkan/vulkan.hpp"
 
-VkCommandBuffer SNZ::BegingSingleTimeCommands()
+VkCommandBuffer SNZ::BeginSingleTimeCommands()
 {
     VkCommandBufferAllocateInfo AllocateInfo{};
     AllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;

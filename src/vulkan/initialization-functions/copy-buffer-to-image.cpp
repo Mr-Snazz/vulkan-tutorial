@@ -3,7 +3,7 @@
 
 void SNZ::CopyBufferToImage(VkBuffer Buffer, VkImage Image, uint32_t Width, uint32_t Height)
 {
-    VkCommandBuffer CommandBuffer = SNZ::BegingSingleTimeCommands();
+    VkCommandBuffer CommandBuffer = SNZ::BeginSingleTimeCommands();
 
     VkBufferImageCopy Region{};
     Region.bufferOffset = 0;

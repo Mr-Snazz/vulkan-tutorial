@@ -3,7 +3,7 @@
 #include "vulkan/helper-functions/create-image-view.hpp"
 #include "vulkan/vulkan.hpp"
 
-VkImageView SNZ::CreateImageView(VkImage Image, VkFormat Format, VkImageAspectFlags AspectFlags)
+VkImageView SNZ::CreateImageView(VkImage Image, VkFormat Format, VkImageAspectFlags AspectFlags, uint32_t MipLevels)
 {
     VkImageViewCreateInfo ViewInfo{};
     ViewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -12,7 +12,7 @@ VkImageView SNZ::CreateImageView(VkImage Image, VkFormat Format, VkImageAspectFl
     ViewInfo.format = Format;
     ViewInfo.subresourceRange.aspectMask = AspectFlags;
     ViewInfo.subresourceRange.baseMipLevel = 0u;
-    ViewInfo.subresourceRange.levelCount = 1u;
+    ViewInfo.subresourceRange.levelCount = MipLevels;
     ViewInfo.subresourceRange.baseArrayLayer = 0u;
     ViewInfo.subresourceRange.layerCount = 1u;
 

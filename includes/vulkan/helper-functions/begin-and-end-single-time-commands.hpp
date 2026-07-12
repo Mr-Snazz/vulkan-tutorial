@@ -5,7 +5,7 @@
 
 namespace SNZ
 {
-    VkCommandBuffer BegingSingleTimeCommands();
+    VkCommandBuffer BeginSingleTimeCommands();
 
     void EndSingleTimeCommands(VkCommandBuffer CommandBuffer);
 }

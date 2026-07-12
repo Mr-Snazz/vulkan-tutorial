@@ -27,7 +27,7 @@ void SNZ::CreateTextureSampler()
     SamplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
     SamplerInfo.mipLodBias = 0.0f;
     SamplerInfo.minLod = 0.0f;
-    SamplerInfo.maxLod = 0.0f;
+    SamplerInfo.maxLod = VK_LOD_CLAMP_NONE;
 
     if (vkCreateSampler(SNZ::LogicalDevice, &SamplerInfo, nullptr, &SNZ::TextureSampler) != VK_SUCCESS) throw std::runtime_error("Failed to create sampler");
 }

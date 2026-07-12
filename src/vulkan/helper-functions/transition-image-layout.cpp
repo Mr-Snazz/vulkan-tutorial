@@ -2,10 +2,11 @@
 
 #include "vulkan/helper-functions/transition-image-layout.hpp"
 #include "vulkan/helper-functions/begin-and-end-single-time-commands.hpp"
+#include "vulkan/vulkan.hpp"
 
-void SNZ::TransitionImageLayout(VkImage Image, VkFormat Format, VkImageLayout OldLayout, VkImageLayout NewLayout)
+void SNZ::TransitionImageLayout(VkImage Image, VkFormat Format, VkImageLayout OldLayout, VkImageLayout NewLayout, uint32_t MipLevels)
 {
-    VkCommandBuffer CommandBuffer = SNZ::BegingSingleTimeCommands();
+    VkCommandBuffer CommandBuffer = SNZ::BeginSingleTimeCommands();
 
     VkImageMemoryBarrier Barrier{};
     Barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -18,7 +19,7 @@ void SNZ::TransitionImageLayout(VkImage Image, VkFormat Format, VkImageLayout Ol
     Barrier.image = Image;
     Barrier.subresourceRange.aspectMask = (Format == VK_FORMAT_D32_SFLOAT) ? VK_IMAGE_ASPECT_DEPTH_BIT : VK_IMAGE_ASPECT_COLOR_BIT;
     Barrier.subresourceRange.baseMipLevel = 0u;
-    Barrier.subresourceRange.levelCount = 1u;
+    Barrier.subresourceRange.levelCount = MipLevels;
     Barrier.subresourceRange.baseArrayLayer = 0u;
     Barrier.subresourceRange.layerCount = 1u;
 

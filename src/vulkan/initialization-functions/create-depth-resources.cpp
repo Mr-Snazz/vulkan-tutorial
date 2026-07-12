@@ -15,7 +15,8 @@ void SNZ::CreateDepthResources()
     SNZ::CreateImage
     (
         SNZ::SwapChainExtent.width, SNZ::SwapChainExtent.height, 
-        DepthFormat, 
+        SNZ::MipLevels,
+        DepthFormat,
         VK_IMAGE_TILING_OPTIMAL, 
         VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
         VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 
@@ -23,9 +24,7 @@ void SNZ::CreateDepthResources()
         SNZ::DepthImageMemory
     );
 
-    SNZ::DepthImageView = SNZ::CreateImageView(SNZ::DepthImage, DepthFormat, VK_IMAGE_ASPECT_DEPTH_BIT);
+    SNZ::DepthImageView = SNZ::CreateImageView(SNZ::DepthImage, DepthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, SNZ::MipLevels);
 
-    SNZ::TransitionImageLayout(SNZ::DepthImage, DepthFormat, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL);
-
-
+    SNZ::TransitionImageLayout(SNZ::DepthImage, DepthFormat, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, SNZ::MipLevels);
 }

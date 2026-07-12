@@ -15,6 +15,7 @@
 #include "vulkan/helper-functions/create-image.hpp"
 #include "vulkan/helper-functions/transition-image-layout.hpp"
 #include "vulkan/initialization-functions/copy-buffer-to-image.hpp"
+#include "vulkan/helper-functions/generate-mipmaps.hpp"
 
 void SNZ::CreateTextureImage()
 {
@@ -38,12 +39,14 @@ void SNZ::CreateTextureImage()
 
     stbi_image_free(Pixels);
 
-    SNZ::CreateImage(Width, Height, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, SNZ::TextureImage, SNZ::TextureImageMemory);
+    SNZ::CreateImage(Width, Height, SNZ::MipLevels, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, SNZ::TextureImage, SNZ::TextureImageMemory);
 
-    SNZ::TransitionImageLayout(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+    SNZ::TransitionImageLayout(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, SNZ::MipLevels);
     SNZ::CopyBufferToImage(StagingBuffer, SNZ::TextureImage, static_cast<uint32_t>(Width), static_cast<uint32_t>(Height));
 
-    SNZ::TransitionImageLayout(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+    SNZ::GenerateMipmaps(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, Width, Height, SNZ::MipLevels);
+
+    SNZ::TransitionImageLayout(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, SNZ::MipLevels);
 
     vkDestroyBuffer(SNZ::LogicalDevice, StagingBuffer, nullptr);
     vkFreeMemory(SNZ::LogicalDevice, StagingBufferMemory, nullptr);

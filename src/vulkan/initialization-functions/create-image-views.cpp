@@ -12,6 +12,6 @@ void SNZ::CreateImageViews()
     SNZ::SwapChainImageViews.resize(SNZ::SwapChainImages.size());
 
     for (size_t I{}; I < SNZ::SwapChainImages.size(); ++I) {
-        SNZ::SwapChainImageViews[I] = SNZ::CreateImageView(SNZ::SwapChainImages[I], SNZ::SwapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT);
+        SNZ::SwapChainImageViews[I] = SNZ::CreateImageView(SNZ::SwapChainImages[I], SNZ::SwapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT, SNZ::MipLevels);
     }
 }
