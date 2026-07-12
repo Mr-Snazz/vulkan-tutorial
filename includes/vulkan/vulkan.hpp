@@ -14,16 +14,24 @@ namespace SNZ
 {
     inline const std::vector<SNZ::Vertex> Vertices = 
     {
-        { {-0.5f, -0.5f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 0.0f } },
-        { { 0.5f, -0.5f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f } },
-        { { 0.5f,  0.5f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
-        { {-0.5f,  0.5f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } }
+        { {-0.5f, -0.5f,  0.0f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 0.0f } },
+        { { 0.5f, -0.5f,  0.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f } },
+        { { 0.5f,  0.5f,  0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
+        { {-0.5f,  0.5f,  0.0f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } },
+
+        { {-0.5f, -0.5f, -0.5f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 0.0f } },
+        { { 0.5f, -0.5f, -0.5f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f } },
+        { { 0.5f,  0.5f, -0.5f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f } },
+        { {-0.5f,  0.5f, -0.5f }, { 1.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } }
     };
 
     inline const std::vector<uint16_t> Indices = 
     {
         0u, 1u, 2u,
-        2u, 3u, 0u
+        2u, 3u, 0u,
+
+        4u, 5u, 6u,
+        6u, 7u, 4u
     };
 
     constexpr uint8_t MaxFramesInFlight = 2u;
@@ -44,6 +52,10 @@ namespace SNZ
     inline VkExtent2D SwapChainExtent;
     inline std::vector<VkImageView> SwapChainImageViews;
     inline std::vector<VkFramebuffer> SwapChainFramebuffers;
+
+    inline VkImage DepthImage;
+    inline VkDeviceMemory DepthImageMemory;
+    inline VkImageView DepthImageView;
 
     inline VkRenderPass RenderPass;
     inline VkDescriptorSetLayout DescriptorSetLayout;

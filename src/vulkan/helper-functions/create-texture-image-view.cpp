@@ -9,5 +9,5 @@
 
 void SNZ::CreateTextureImageView()
 {
-    SNZ::TextureImageView = SNZ::CreateImageView(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB);
+    SNZ::TextureImageView = SNZ::CreateImageView(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
 }

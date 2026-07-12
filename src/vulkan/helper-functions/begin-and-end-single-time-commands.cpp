@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "vulkan/helper-functions/begin-and-end-single-time-commands.hpp"
 #include "vulkan/vulkan.hpp"
 
@@ -10,13 +12,17 @@ VkCommandBuffer SNZ::BegingSingleTimeCommands()
     AllocateInfo.commandBufferCount = 1u;
     
     VkCommandBuffer CommandBuffer;
-    vkAllocateCommandBuffers(SNZ::LogicalDevice, &AllocateInfo, &CommandBuffer);
+    if (vkAllocateCommandBuffers(SNZ::LogicalDevice, &AllocateInfo, &CommandBuffer) != VK_SUCCESS) {
+        throw std::runtime_error("Failed to allocate command buffer");
+    }
 
     VkCommandBufferBeginInfo BeginInfo{};
     BeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
     BeginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-    vkBeginCommandBuffer(CommandBuffer, &BeginInfo);
+    if (vkBeginCommandBuffer(CommandBuffer, &BeginInfo) != VK_SUCCESS) {
+        throw std::runtime_error("Failed to begin command buffer");
+    }
 
     return CommandBuffer;
 }

@@ -16,11 +16,11 @@ namespace SNZ
         static std::array<VkVertexInputAttributeDescription, 3u> GetAttributeDescriptions();
 
     public:
-        glm::vec2 Position;
+        glm::vec3 Position;
         glm::vec3 Color;
         glm::vec2 TextureCoordinate;
 
-        Vertex(const glm::vec2& IPosition, const glm::vec3& IColor, const glm::vec2& TextureCoordinate);
+        Vertex(const glm::vec3& IPosition, const glm::vec3& IColor, const glm::vec2& TextureCoordinate);
 
     private:
 

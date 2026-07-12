@@ -5,5 +5,5 @@
 
 namespace SNZ
 {
-    VkImageView CreateImageView(VkImage Image, VkFormat Format);
+    VkImageView CreateImageView(VkImage Image, VkFormat Format, VkImageAspectFlags AspectFlags);
 }

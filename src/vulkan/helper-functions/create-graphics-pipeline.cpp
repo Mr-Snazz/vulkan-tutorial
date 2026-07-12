@@ -128,6 +128,18 @@ void SNZ::CreateGraphicsPipeline(const VkDevice& LogicalDevice)
 
     if (vkCreatePipelineLayout(LogicalDevice, &pipelineLayoutInfo, nullptr, &SNZ::PipelineLayout) != VK_SUCCESS) throw std::runtime_error("failed to create pipeline layout");
 
+    VkPipelineDepthStencilStateCreateInfo DepthStencil{};
+    DepthStencil.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;    
+    DepthStencil.depthTestEnable = VK_TRUE;
+    DepthStencil.depthWriteEnable = VK_TRUE;
+    DepthStencil.depthCompareOp = VK_COMPARE_OP_LESS;
+    DepthStencil.depthBoundsTestEnable = VK_FALSE;
+    DepthStencil.minDepthBounds = 0.0f;
+    DepthStencil.maxDepthBounds = 1.0f;
+    DepthStencil.stencilTestEnable = VK_FALSE;
+    DepthStencil.front = {};
+    DepthStencil.back = {};
+
     VkGraphicsPipelineCreateInfo PipelineInfo{};
     PipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
     PipelineInfo.stageCount = 2u;
@@ -137,7 +149,7 @@ void SNZ::CreateGraphicsPipeline(const VkDevice& LogicalDevice)
     PipelineInfo.pViewportState = &ViewportStateCreateInfo;
     PipelineInfo.pRasterizationState = &Rasterizer;
     PipelineInfo.pMultisampleState = &Multisampling;
-    PipelineInfo.pDepthStencilState = nullptr; // Optional
+    PipelineInfo.pDepthStencilState = &DepthStencil;
     PipelineInfo.pColorBlendState = &ColorBlending;
     PipelineInfo.pDynamicState = &DynamicStateCreateInfo;
     PipelineInfo.layout = SNZ::PipelineLayout;

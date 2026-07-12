@@ -31,6 +31,7 @@
 #include "vulkan/helper-functions/create-texture-image.hpp"
 #include "vulkan/helper-functions/create-texture-image-view.hpp"
 #include "vulkan/helper-functions/create-texture-sampler.hpp"
+#include "vulkan/helper-functions/create-depth-resources.hpp"
 
 const std::vector<const char*> ValidationLayers = 
     {
@@ -201,9 +202,11 @@ void SNZ::InitializeVulkan()
 
     SNZ::CreateGraphicsPipeline(SNZ::LogicalDevice);
 
-    SNZ::CreateFramebuffers();
-    
     SNZ::CreateCommandPool();
+
+    SNZ::CreateDepthResources();
+    
+    SNZ::CreateFramebuffers();
 
     SNZ::CreateTextureImage();
 
@@ -233,14 +236,14 @@ void SNZ::FreeVulkanResources()
     vkDestroySampler(SNZ::LogicalDevice, SNZ::TextureSampler, nullptr);
     vkDestroyImageView(SNZ::LogicalDevice, SNZ::TextureImageView, nullptr);
 
-    vkDestroyImage(SNZ::LogicalDevice, TextureImage, nullptr);
+    vkDestroyImage(SNZ::LogicalDevice, SNZ::TextureImage, nullptr);
     vkFreeMemory(SNZ::LogicalDevice, SNZ::TextureImageMemory, nullptr);
 
     for (uint8_t I{}; I < SNZ::MaxFramesInFlight; ++I) {
         vkDestroyBuffer(SNZ::LogicalDevice, SNZ::UniformBuffers[I], nullptr);
         vkFreeMemory(SNZ::LogicalDevice, SNZ::UniformBuffersMemory[I], nullptr);
     }
-
+ 
     vkDestroyDescriptorPool(SNZ::LogicalDevice, SNZ::DescriptorPool, nullptr);
     vkDestroyDescriptorSetLayout(SNZ::LogicalDevice, SNZ::DescriptorSetLayout, nullptr);
 

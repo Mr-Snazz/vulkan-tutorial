@@ -12,16 +12,18 @@ void SNZ::RecordCommandBuffer(VkCommandBuffer CommandBuffer, uint32_t ImageIndex
 
     if (vkBeginCommandBuffer(CommandBuffer, &BeginInfo) != VK_SUCCESS) throw std::runtime_error("Failed to begin recording command buffer");
 
+    std::array<VkClearValue, 2> ClearValues{};
+    ClearValues[0].color = { { 0.0f, 0.0f, 0.0f, 1.0f } };
+    ClearValues[1].depthStencil = { 1.0f, 0 };
+
     VkRenderPassBeginInfo RenderPassInfo{};
     RenderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
     RenderPassInfo.renderPass = SNZ::RenderPass;
     RenderPassInfo.framebuffer = SNZ::SwapChainFramebuffers[ImageIndex];
-    RenderPassInfo.renderArea.offset = {0, 0};
+    RenderPassInfo.renderArea.offset = { 0, 0 };
     RenderPassInfo.renderArea.extent = SNZ::SwapChainExtent;
-
-    VkClearValue ClearColor = { { {0.0f, 0.0f, 0.0f, 1.0f } } };
-    RenderPassInfo.clearValueCount = 1;
-    RenderPassInfo.pClearValues = &ClearColor;
+    RenderPassInfo.clearValueCount = static_cast<uint32_t>(ClearValues.size());
+    RenderPassInfo.pClearValues = ClearValues.data();
 
     vkCmdBeginRenderPass(CommandBuffer, &RenderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 

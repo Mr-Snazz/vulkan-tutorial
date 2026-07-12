@@ -79,7 +79,7 @@ void SNZ::MainLoop()
         PresentInfo.pImageIndices = &ImageIndex;
         PresentInfo.pResults = nullptr;
 
-        vkQueuePresentKHR(PresentQueue, &PresentInfo);
+        vkQueuePresentKHR(SNZ::PresentQueue, &PresentInfo);
 
         CurrentFrame = (CurrentFrame + 1u) % SNZ::MaxFramesInFlight;
     }

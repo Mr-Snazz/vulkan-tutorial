@@ -17,7 +17,7 @@ std::array<VkVertexInputAttributeDescription, 3u> SNZ::Vertex::GetAttributeDescr
 
     AttributeDescriptions[0].binding = 0u;
     AttributeDescriptions[0].location = 0u;
-    AttributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+    AttributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
     AttributeDescriptions[0].offset = offsetof(SNZ::Vertex, SNZ::Vertex::Position);
 
     AttributeDescriptions[1].binding = 0u;
@@ -35,7 +35,7 @@ std::array<VkVertexInputAttributeDescription, 3u> SNZ::Vertex::GetAttributeDescr
 
 
 
-SNZ::Vertex::Vertex(const glm::vec2& IPosition, const glm::vec3& IColor, const glm::vec2& ITextureCoordinate)
+SNZ::Vertex::Vertex(const glm::vec3& IPosition, const glm::vec3& IColor, const glm::vec2& ITextureCoordinate)
     : Position(IPosition), Color(IColor), TextureCoordinate(ITextureCoordinate)
 {
 

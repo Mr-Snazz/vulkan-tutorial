@@ -36,12 +36,12 @@ void SNZ::CreateTextureImage()
 
     stbi_image_free(Pixels);
 
-    SNZ::CreateImage(Width, Height, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, TextureImage, TextureImageMemory);
+    SNZ::CreateImage(Width, Height, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, SNZ::TextureImage, SNZ::TextureImageMemory);
 
-    SNZ::TransitionImageLayout(TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-    SNZ::CopyBufferToImage(StagingBuffer, TextureImage, static_cast<uint32_t>(Width), static_cast<uint32_t>(Height));
+    SNZ::TransitionImageLayout(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+    SNZ::CopyBufferToImage(StagingBuffer, SNZ::TextureImage, static_cast<uint32_t>(Width), static_cast<uint32_t>(Height));
 
-    SNZ::TransitionImageLayout(TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+    SNZ::TransitionImageLayout(SNZ::TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
     vkDestroyBuffer(SNZ::LogicalDevice, StagingBuffer, nullptr);
     vkFreeMemory(SNZ::LogicalDevice, StagingBufferMemory, nullptr);
