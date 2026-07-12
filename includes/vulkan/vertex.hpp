@@ -11,15 +11,16 @@ namespace SNZ
     class Vertex
     {
     public:
-        static inline VkVertexInputBindingDescription GetBindingDescription();
+        static VkVertexInputBindingDescription GetBindingDescription();
 
-        static inline std::array<VkVertexInputAttributeDescription, 2u> GetAttributeDescriptions();
+        static std::array<VkVertexInputAttributeDescription, 3u> GetAttributeDescriptions();
 
     public:
         glm::vec2 Position;
         glm::vec3 Color;
+        glm::vec2 TextureCoordinate;
 
-        Vertex(const glm::vec2& IPosition, const glm::vec3& IColor);
+        Vertex(const glm::vec2& IPosition, const glm::vec3& IColor, const glm::vec2& TextureCoordinate);
 
     private:
 
@@ -27,4 +28,3 @@ namespace SNZ
     };
 }
 
-#include "vulkan/vertex.inl"

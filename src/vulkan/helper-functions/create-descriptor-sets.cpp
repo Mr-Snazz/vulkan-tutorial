@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <array>
 
 #include "vulkan/helper-functions/create-descriptor-sets.hpp"
 #include "vulkan/vulkan.hpp"
@@ -23,20 +24,30 @@ void SNZ::CreateDescriptorSets()
         BufferInfo.offset = 0u;
         BufferInfo.range = sizeof(SNZ::UniformBufferObject);
 
-        VkWriteDescriptorSet DescriptorWrite{};
-        DescriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        DescriptorWrite.dstSet = SNZ::DescriptorSets[I];
-        DescriptorWrite.dstBinding = 0u;
-        DescriptorWrite.dstArrayElement = 0u;
+        VkDescriptorImageInfo ImageInfo{};
+        ImageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+        ImageInfo.imageView = SNZ::TextureImageView;
+        ImageInfo.sampler = SNZ::TextureSampler;
 
-        DescriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-        DescriptorWrite.descriptorCount = 1u;
+        std::array<VkWriteDescriptorSet, 2> DescriptorWrites{};
 
-        DescriptorWrite.pBufferInfo = &BufferInfo;
-        DescriptorWrite.pImageInfo = nullptr;
-        DescriptorWrite.pTexelBufferView = nullptr;
+        DescriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        DescriptorWrites[0].dstSet = SNZ::DescriptorSets[I];
+        DescriptorWrites[0].dstBinding = 0u;
+        DescriptorWrites[0].dstArrayElement = 0u;
+        DescriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+        DescriptorWrites[0].descriptorCount = 1u;
+        DescriptorWrites[0].pBufferInfo = &BufferInfo;
 
-        vkUpdateDescriptorSets(SNZ::LogicalDevice, 1u, &DescriptorWrite, 0u, nullptr);
+        DescriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        DescriptorWrites[1].dstSet = SNZ::DescriptorSets[I];
+        DescriptorWrites[1].dstBinding = 1u;
+        DescriptorWrites[1].dstArrayElement = 0u;
+        DescriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+        DescriptorWrites[1].descriptorCount = 1u;
+        DescriptorWrites[1].pImageInfo = &ImageInfo;
+
+        vkUpdateDescriptorSets(SNZ::LogicalDevice, static_cast<uint32_t>(DescriptorWrites.size()), DescriptorWrites.data(), 0, nullptr);
         
     }
 }

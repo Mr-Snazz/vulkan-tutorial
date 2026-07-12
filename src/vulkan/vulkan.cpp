@@ -84,7 +84,6 @@ void SNZ::InitializeVulkan()
     for (const auto& Extension : Extensions) {
         std::cout << "\t" << Extension.extensionName << "\n";
     }
-
     // Create surface for rendering
     if (glfwCreateWindowSurface(SNZ::VulkanInstance, SNZ::Window, nullptr, &SNZ::Surface) != VK_SUCCESS) {
         std::cerr << "Failed to create window surface!\n";
